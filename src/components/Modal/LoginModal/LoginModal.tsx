@@ -3,23 +3,33 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { useState } from "react";
 import RegisterModal from "../RegisterModal/RegisterModal";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Form } from "@/components/ui/form";
+import FormFieldComponent from "@/hooks/FormFieldComponent/FormFieldComponent";
+import { TLoginUser } from "@/interface/user";
 
 const LoginModal = () => {
   const [open, setOpen] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-
+  const form = useForm<TLoginUser>();
   const handleRegisterClick = () => {
     setOpen(false);
     setShowRegister(true);
+  };
+  const onSubmit: SubmitHandler<TLoginUser> = (data) => {
+    // Handle form submission
+    const userInfo = {
+      email: data.email,
+      password: data.password,
+    };
+    console.log(userInfo);
   };
 
   return (
@@ -44,34 +54,29 @@ const LoginModal = () => {
               Enter your credentials to access your account
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input
-                id="name"
-                placeholder="Enter your name..."
-                className="col-span-3"
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormFieldComponent
+                control={form.control}
+                name="email"
+                label="Email"
+                placeholder="Enter your email"
+                required={true}
               />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="password" className="text-right">
-                Password
-              </Label>
-              <Input
-                id="password"
+              <FormFieldComponent
+                control={form.control}
+                name="password"
+                label="Password"
+                placeholder="Enter your password"
                 type="password"
-                placeholder="Enter your password..."
-                className="col-span-3"
+                required={true}
               />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="submit" className="bg-blue-500 hover:bg-blue-600">
-              Login
-            </Button>
-          </DialogFooter>
+              <Button className="cursor-pointer" type="submit">
+                Submit
+              </Button>
+            </form>
+          </Form>
+
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-500">
               New to here?{" "}

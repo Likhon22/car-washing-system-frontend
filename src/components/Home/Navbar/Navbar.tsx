@@ -1,4 +1,5 @@
 import LoginModal from "@/components/Modal/LoginModal/LoginModal";
+import { mainLayoutNavigation } from "@/routes/MainLayoutRoutes";
 
 import {
   NavigationMenu,
@@ -10,24 +11,6 @@ import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 
-type TNavItems = {
-  label: string;
-  to: string;
-};
-const navItems: TNavItems[] = [
-  {
-    label: "Home",
-    to: "/",
-  },
-  {
-    label: "About",
-    to: "/about",
-  },
-  {
-    label: "Contact",
-    to: "/contact",
-  },
-];
 const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,7 +25,7 @@ const Navbar = () => {
       <h1>Car Wash</h1>
       <NavigationMenu>
         <NavigationMenuList className="hidden md:flex items-center gap-4 ">
-          {navItems.map((navItem: TNavItems, index: number) => {
+          {mainLayoutNavigation.map((navItem, index: number) => {
             const isActive = location.pathname === navItem.to; // Check if the current path matches the nav item
             console.log(isActive);
 
@@ -68,7 +51,7 @@ const Navbar = () => {
               : "opacity-0 -translate-y-5 pointer-events-none"
           }`}
         >
-          {navItems.map((navItem, index) => {
+          {mainLayoutNavigation.map((navItem, index) => {
             const isActive = location.pathname === navItem.to;
 
             return (
