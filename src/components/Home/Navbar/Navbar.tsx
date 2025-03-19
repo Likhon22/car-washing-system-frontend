@@ -27,7 +27,6 @@ const Navbar = () => {
         <NavigationMenuList className="hidden md:flex items-center gap-4 ">
           {mainLayoutNavigation.map((navItem, index: number) => {
             const isActive = location.pathname === navItem.to; // Check if the current path matches the nav item
-            console.log(isActive);
 
             return (
               <NavigationMenuItem key={index}>

@@ -1,12 +1,9 @@
+import { TLayoutPath } from "@/interface/routes";
 import Home from "@/pages/Home/Home";
-import { ReactNode } from "react";
+import { navigationGenerator } from "@/utils/navigationGenerator";
+import { routesGenerator } from "@/utils/routesGenerator";
 
-type TMainlayoutPath = {
-  name: string;
-  path: string;
-  element: ReactNode;
-};
-const mainLayoutPath: TMainlayoutPath[] = [
+const mainLayoutPath: TLayoutPath[] = [
   {
     name: "Home",
     path: "/",
@@ -18,15 +15,5 @@ const mainLayoutPath: TMainlayoutPath[] = [
     element: "About",
   },
 ];
-export const mainLayoutRoutes = mainLayoutPath.map((path) => {
-  return {
-    path: path.path,
-    element: path.element,
-  };
-});
-export const mainLayoutNavigation = mainLayoutPath.map((path) => {
-  return {
-    label: path.name,
-    to: path.path,
-  };
-});
+export const mainLayoutRoutes = routesGenerator(mainLayoutPath);
+export const mainLayoutNavigation = navigationGenerator(mainLayoutPath);

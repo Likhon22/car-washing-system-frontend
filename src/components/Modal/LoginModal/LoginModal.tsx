@@ -12,7 +12,7 @@ import { useState } from "react";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
-import FormFieldComponent from "@/hooks/FormFieldComponent/FormFieldComponent";
+import FormFieldComponent from "@/components/FormFieldComponent/FormFieldComponent";
 import { TLoginUser } from "@/interface/user";
 
 const LoginModal = () => {

@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
-import FormFieldComponent from "@/hooks/FormFieldComponent/FormFieldComponent";
+import FormFieldComponent from "@/components/FormFieldComponent/FormFieldComponent";
 import { TRegisterUserData } from "@/interface/user";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
