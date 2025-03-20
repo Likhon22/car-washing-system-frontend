@@ -1,5 +1,6 @@
 import { TLayoutPath } from "@/interface/routes";
 import Home from "@/pages/Home/Home";
+
 import { navigationGenerator } from "@/utils/navigationGenerator";
 import { routesGenerator } from "@/utils/routesGenerator";
 

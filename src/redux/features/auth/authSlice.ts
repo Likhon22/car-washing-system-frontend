@@ -1,8 +1,9 @@
+import { TAuthUser } from "@/interface/user";
 import { RootState } from "@/redux/store";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type TInitialState = {
-  user: null | object;
+  user: null | TAuthUser;
   token: null | string;
 };
 const initialState: TInitialState = {
@@ -13,7 +14,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action) => {
+    setUser: (
+      state,
+      action: PayloadAction<{ user: TAuthUser; token: string }>
+    ) => {
       const { user, token } = action.payload;
       state.user = user;
       state.token = token;

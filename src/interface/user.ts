@@ -20,3 +20,12 @@ export type TAppUser = {
   address: TAddress;
   isDeleted?: boolean;
 };
+
+// auth user interface
+
+export type TAuthUser = {
+  email: string;
+  role: "admin" | "user";
+  iat: number;
+  exp: number;
+};

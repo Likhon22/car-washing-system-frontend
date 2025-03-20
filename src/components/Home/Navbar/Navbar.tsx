@@ -20,6 +20,15 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  const navigationItems = [...mainLayoutNavigation];
+
+  if (user) {
+    navigationItems.push({
+      label: "Dashboard",
+      to: "/dashboard/create-admin",
+    });
+  }
+
   return (
     <nav className="p-4 bg-gray-800 text-white flex  justify-between items-center">
       <div className="md:hidden">
@@ -30,7 +39,7 @@ const Navbar = () => {
       <h1>Car Wash</h1>
       <NavigationMenu>
         <NavigationMenuList className="hidden md:flex items-center gap-4 ">
-          {mainLayoutNavigation.map((navItem, index: number) => {
+          {navigationItems.map((navItem, index: number) => {
             const isActive = location.pathname === navItem.to; // Check if the current path matches the nav item
 
             return (
@@ -54,7 +63,7 @@ const Navbar = () => {
               : "opacity-0 -translate-y-5 pointer-events-none"
           }`}
         >
-          {mainLayoutNavigation.map((navItem, index) => {
+          {navigationItems.map((navItem, index) => {
             const isActive = location.pathname === navItem.to;
 
             return (

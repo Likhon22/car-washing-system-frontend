@@ -20,6 +20,7 @@ import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { useAppDispatch } from "@/redux/hook";
 import { setUser } from "@/redux/features/auth/authSlice";
 import verifyToken from "@/utils/verifyToken";
+import { TAuthUser } from "@/interface/user";
 
 const LoginModal = () => {
   const [open, setOpen] = useState(false);
@@ -44,10 +45,10 @@ const LoginModal = () => {
 
     try {
       const res = await login(userInfo).unwrap();
-      const user = verifyToken(res.data.accessToken);
+      const user = verifyToken(res.data.accessToken) as TAuthUser;
       console.log(user);
 
-      dispatch(setUser({ user: user, token: res.data.accessToken }));
+      dispatch(setUser({ user, token: res.data.accessToken }));
     } catch (err) {
       console.log(err);
     }
