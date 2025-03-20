@@ -1,4 +1,7 @@
 import LoginModal from "@/components/Modal/LoginModal/LoginModal";
+import { Button } from "@/components/ui/button";
+import { logout, selectUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { mainLayoutNavigation } from "@/routes/MainLayoutRoutes";
 
 import {
@@ -13,6 +16,8 @@ import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const location = useLocation();
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   return (
@@ -68,7 +73,17 @@ const Navbar = () => {
           })}
         </div>
       )}
-      <LoginModal />
+      {user ? (
+        <Button
+          variant="outline"
+          className="bg-blue-400 border-none cursor-pointer hover:bg-blue-500"
+          onClick={() => dispatch(logout())}
+        >
+          Logout
+        </Button>
+      ) : (
+        <LoginModal />
+      )}
     </nav>
   );
 };

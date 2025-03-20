@@ -14,6 +14,9 @@ import { useState } from "react";
 import registerSchema, { TRegisterSchema } from "@/schemas/auth/registerSchema";
 import { TAppUser } from "@/interface/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import { useAppDispatch } from "@/redux/hook";
+import { logout } from "@/redux/features/auth/authSlice";
 const RegisterModal = ({
   showRegister,
   setShowRegister,
@@ -21,13 +24,29 @@ const RegisterModal = ({
   showRegister: boolean;
   setShowRegister: (value: boolean) => void;
 }) => {
+  const [register] = useRegisterMutation();
+  const dispatch = useAppDispatch();
   const [formStep, setFormStep] = useState(0);
   const form = useForm<TRegisterSchema>({
     resolver: zodResolver(registerSchema),
     mode: "onBlur",
+    defaultValues: {
+      firstName: "John",
+      middleName: "Ahmed",
+      lastName: "Doe",
+      email: "johndoe@example.com",
+      password: "user123",
+      phone: "01712345678",
+      profileImg: "",
+      city: "Dhaka",
+      area: "Mirpur",
+      houseNo: "123",
+      street: "Main Street",
+      streetNo: "5",
+    },
   });
 
-  const onSubmit: SubmitHandler<TRegisterSchema> = (data) => {
+  const onSubmit: SubmitHandler<TRegisterSchema> = async (data) => {
     const appUserInfo: TAppUser = {
       name: {
         firstName: data.firstName,
@@ -46,9 +65,26 @@ const RegisterModal = ({
         houseNo: data.houseNo,
       },
     };
-    console.log(appUserInfo);
+    const user = {
+      password: data.password,
+      appUser: appUserInfo,
+    };
+    console.log(user);
 
-    setShowRegister(false);
+    try {
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(user));
+      const res = await register(formData).unwrap();
+      console.log(res);
+
+      await dispatch(logout());
+      // Handle success
+      console.log("Registration successful");
+      setShowRegister(false);
+    } catch (err) {
+      // Handle errors
+      console.log(err);
+    }
   };
 
   // Handle next step validation
