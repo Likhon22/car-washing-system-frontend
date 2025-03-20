@@ -16,25 +16,41 @@ import FormFieldComponent from "@/components/FormFieldComponent/FormFieldCompone
 
 import loginSchema, { TLoginSchema } from "@/schemas/auth/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { useAppDispatch } from "@/redux/hook";
+import { setUser } from "@/redux/features/auth/authSlice";
+import verifyToken from "@/utils/verifyToken";
 
 const LoginModal = () => {
   const [open, setOpen] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [login] = useLoginMutation();
+  const dispatch = useAppDispatch();
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
     mode: "onBlur",
+    defaultValues: { email: "student1@gmail.com", password: "user123" },
   });
   const handleRegisterClick = () => {
     setOpen(false);
     setShowRegister(true);
   };
-  const onSubmit: SubmitHandler<TLoginSchema> = (data) => {
+  const onSubmit: SubmitHandler<TLoginSchema> = async (data) => {
     // Handle form submission
     const userInfo = {
       email: data.email,
       password: data.password,
     };
-    console.log(userInfo);
+
+    try {
+      const res = await login(userInfo).unwrap();
+      const user = verifyToken(res.data.accessToken);
+      console.log(user);
+
+      dispatch(setUser({ user: user, token: res.data.accessToken }));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
