@@ -1,18 +1,22 @@
-export type TRegisterUserData = {
+export type TName = {
   firstName: string;
   middleName?: string;
   lastName: string;
-  email: string;
-  password: string;
-  phone: string;
+};
+export type TAddress = {
   city: string;
   area: string;
-  profileImg?: string;
   houseNo: string;
   street: string;
   streetNo: string;
 };
-export type TLoginUser = {
+
+export type TAppUser = {
+  id?: string;
+  name: TName;
   email: string;
-  password: string;
+  profileImg?: string;
+  phone: string;
+  address: TAddress;
+  isDeleted?: boolean;
 };

@@ -8,10 +8,12 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import FormFieldComponent from "@/components/FormFieldComponent/FormFieldComponent";
-import { TRegisterUserData } from "@/interface/user";
+
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
-
+import registerSchema, { TRegisterSchema } from "@/schemas/auth/registerSchema";
+import { TAppUser } from "@/interface/user";
+import { zodResolver } from "@hookform/resolvers/zod";
 const RegisterModal = ({
   showRegister,
   setShowRegister,
@@ -20,17 +22,20 @@ const RegisterModal = ({
   setShowRegister: (value: boolean) => void;
 }) => {
   const [formStep, setFormStep] = useState(0);
-  const form = useForm<TRegisterUserData>();
+  const form = useForm<TRegisterSchema>({
+    resolver: zodResolver(registerSchema),
+    mode: "onBlur",
+  });
 
-  const onSubmit: SubmitHandler<TRegisterUserData> = (data) => {
-    const appUserInfo = {
+  const onSubmit: SubmitHandler<TRegisterSchema> = (data) => {
+    const appUserInfo: TAppUser = {
       name: {
         firstName: data.firstName,
         lastName: data.lastName,
         middleName: data.middleName || "",
       },
       email: data.email,
-      password: data.password,
+
       phone: data.phone,
       profileImg: data.profileImg || "",
       address: {
@@ -48,7 +53,7 @@ const RegisterModal = ({
 
   // Handle next step validation
   const nextStep = async () => {
-    let fieldsToValidate: Array<keyof TRegisterUserData> = [];
+    let fieldsToValidate: Array<keyof TRegisterSchema> = [];
 
     if (formStep === 0) {
       fieldsToValidate = ["firstName", "lastName", "email", "password"];

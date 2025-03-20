@@ -13,17 +13,22 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import FormFieldComponent from "@/components/FormFieldComponent/FormFieldComponent";
-import { TLoginUser } from "@/interface/user";
+
+import loginSchema, { TLoginSchema } from "@/schemas/auth/loginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginModal = () => {
   const [open, setOpen] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const form = useForm<TLoginUser>();
+  const form = useForm<TLoginSchema>({
+    resolver: zodResolver(loginSchema),
+    mode: "onBlur",
+  });
   const handleRegisterClick = () => {
     setOpen(false);
     setShowRegister(true);
   };
-  const onSubmit: SubmitHandler<TLoginUser> = (data) => {
+  const onSubmit: SubmitHandler<TLoginSchema> = (data) => {
     // Handle form submission
     const userInfo = {
       email: data.email,

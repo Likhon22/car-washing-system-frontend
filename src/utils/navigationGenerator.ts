@@ -5,7 +5,7 @@ export const navigationGenerator = (routes: TLayoutPath[]): TNavigation[] => {
     return {
       label: path.name,
       to: path.path,
-    };
+        };
   });
   return navigation;
 };
