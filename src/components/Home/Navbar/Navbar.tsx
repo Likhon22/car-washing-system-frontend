@@ -35,13 +35,12 @@ const Navbar = () => {
 
             return (
               <NavigationMenuItem key={index}>
-                <Link to={navItem.to}>
-                  <NavigationMenuLink
-                    className={`${isActive ? "text-blue-400" : "text-white"}`}
-                  >
-                    {navItem.label}
-                  </NavigationMenuLink>
-                </Link>
+                <NavigationMenuLink
+                  href={navItem.to}
+                  className={`${isActive ? "text-blue-400" : "text-white"}`}
+                >
+                  {navItem.label}
+                </NavigationMenuLink>
               </NavigationMenuItem>
             );
           })}
