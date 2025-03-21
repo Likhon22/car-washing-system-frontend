@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BaseQueryApi,
   BaseQueryFn,
@@ -14,10 +15,11 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
+      headers.set("Authorization", `${token}`);
     }
     return headers;
   },
+  credentials: "include",
 });
 
 const baseQueryWithRefreshToken: BaseQueryFn<
@@ -36,12 +38,16 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     });
     const data = await res.json();
     const accessToken = data?.data?.accessToken;
+
     if (accessToken) {
+      const tokenWithoutBearer = accessToken.replace(/^Bearer\s/, "");
+      console.log(tokenWithoutBearer);
+
       const user = (api.getState() as RootState).auth.user;
-      api.dispatch(setUser({ user, token: accessToken }));
+      api.dispatch(setUser({ user, token: tokenWithoutBearer }));
     }
 
-    result = await baseQuery(data, api, extraOptions);
+    result = await baseQuery(args, api, extraOptions);
   }
   return result;
 };

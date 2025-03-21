@@ -47,8 +47,9 @@ const LoginModal = () => {
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.accessToken) as TAuthUser;
       console.log(user);
-
-      dispatch(setUser({ user, token: res.data.accessToken }));
+      const token = res?.data?.accessToken as string;
+      const accessToken = token.replace(/^Bearer\s/, "");
+      dispatch(setUser({ user, token: accessToken }));
     } catch (err) {
       console.log(err);
     }
