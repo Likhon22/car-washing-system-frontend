@@ -41,7 +41,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
     if (accessToken) {
       const tokenWithoutBearer = accessToken.replace(/^Bearer\s/, "");
-      console.log(tokenWithoutBearer);
 
       const user = (api.getState() as RootState).auth.user;
       api.dispatch(setUser({ user, token: tokenWithoutBearer }));

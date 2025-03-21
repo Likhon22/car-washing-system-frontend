@@ -36,7 +36,12 @@ const Navbar = () => {
           {isMenuOpen ? <HiX /> : <HiMenu />}
         </button>
       </div>
-      <h1>Car Wash</h1>
+      <Link
+        to="/"
+        className="text-xl font-medium transition hover:scale-110 delay-150 cursor-pointer"
+      >
+        Car Wash
+      </Link>
       <NavigationMenu>
         <NavigationMenuList className="hidden md:flex items-center gap-4 ">
           {navigationItems.map((navItem, index: number) => {
@@ -46,7 +51,7 @@ const Navbar = () => {
               <NavigationMenuItem key={index}>
                 <NavigationMenuLink
                   href={navItem.to}
-                  className={`${isActive ? "text-blue-400" : "text-white"}`}
+                  className={` ${isActive ? "text-blue-400 " : "text-white"}`}
                 >
                   {navItem.label}
                 </NavigationMenuLink>
@@ -83,7 +88,6 @@ const Navbar = () => {
       )}
       {user ? (
         <Button
-          variant="outline"
           className="bg-blue-400 border-none cursor-pointer hover:bg-blue-500"
           onClick={() => dispatch(logout())}
         >

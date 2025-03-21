@@ -1,4 +1,4 @@
-import { useGetAllBookingsQuery } from "@/redux/features/admin/adminApi";
+import { useGetAllBookingsQuery } from "@/redux/features/bookings/bookingApi";
 
 const CreateAdmin = () => {
   const { data, isLoading, error } = useGetAllBookingsQuery(undefined);

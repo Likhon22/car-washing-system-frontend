@@ -1,10 +1,11 @@
-import { Button } from "@/components/ui/button";
+import Banner from "@/components/Home/Banner/Banner";
+import LatestServices from "@/components/Home/LatestServices/LatestServices";
 
 const Home = () => {
   return (
     <div>
-      <p>this is home</p>
-      <Button className="cursor-pointer ">Click me</Button>
+      <Banner />
+      <LatestServices />
     </div>
   );
 };

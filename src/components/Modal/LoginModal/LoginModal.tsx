@@ -60,8 +60,7 @@ const LoginModal = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button
-            variant="outline"
-            className="bg-blue-400 border-none cursor-pointer hover:bg-blue-500"
+            className="bg-blue-400 transition ease-in hover:-translate-y-1 hover:scale-105  delay-150 border-none cursor-pointer hover:bg-blue-500"
             onClick={() => {
               setOpen(true);
               setShowRegister(false);
