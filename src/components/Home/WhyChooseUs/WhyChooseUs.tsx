@@ -1,5 +1,3 @@
-import React from "react";
-
 const WhyChooseUs = () => {
   return (
     <section className="py-16 px-4 bg-white ">

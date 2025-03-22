@@ -82,7 +82,7 @@ const Navbar = () => {
           <div className="flex items-center">
             {user ? (
               <Button
-                className="bg-blue-500 hover:bg-blue-600 text-white border-none rounded-md px-4 py-2 transition-all duration-200"
+                className="bg-blue-500 hover:bg-blue-600 text-white border-none rounded-md px-4 py-2 transition-all  hover:scale-105 cursor-pointer duration-200"
                 onClick={() => dispatch(logout())}
               >
                 Logout
