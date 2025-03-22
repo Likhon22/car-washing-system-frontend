@@ -11,7 +11,7 @@ import { Clock, DollarSign } from "lucide-react";
 const ServiceCard = ({ service }: { service: TService }) => {
   const { name, description, duration, price } = service;
   return (
-    <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-gray-200">
+    <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:scale-105 border border-gray-200">
       <CardHeader className="pb-2 bg-gray-50">
         <CardTitle className="text-xl font-bold text-gray-800">
           {name}
