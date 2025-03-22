@@ -15,3 +15,8 @@ export type TNavigation = {
   label: string;
   to: string;
 };
+
+export type TSidebar = {
+  title: string;
+  url: string;
+};
