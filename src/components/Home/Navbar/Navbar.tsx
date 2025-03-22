@@ -30,71 +30,94 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="p-4 bg-gray-800 text-white flex  justify-between items-center">
-      <div className="md:hidden">
-        <button onClick={toggleMenu}>
-          {isMenuOpen ? <HiX /> : <HiMenu />}
-        </button>
-      </div>
-      <Link
-        to="/"
-        className="text-xl font-medium transition hover:scale-110 delay-150 cursor-pointer"
-      >
-        Car Wash
-      </Link>
-      <NavigationMenu>
-        <NavigationMenuList className="hidden md:flex items-center gap-4 ">
-          {navigationItems.map((navItem, index: number) => {
-            const isActive = location.pathname === navItem.to; // Check if the current path matches the nav item
+    <nav className="fixed w-full top-0 z-50 bg-gray-800/10   text-white shadow-md backdrop-blur-sm ">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <div className="md:hidden">
+              <button
+                onClick={toggleMenu}
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              >
+                <span className="sr-only">Open main menu</span>
+                {isMenuOpen ? (
+                  <HiX className="block h-6 w-6" />
+                ) : (
+                  <HiMenu className="block h-6 w-6" />
+                )}
+              </button>
+            </div>
+            <Link
+              to="/"
+              className="flex items-center text-xl font-semibold text-white transition-transform duration-200 hover:scale-105"
+            >
+              <span className="text-blue-400">Car</span>
+              <span>Wash</span>
+            </Link>
+          </div>
 
-            return (
-              <NavigationMenuItem key={index}>
-                <NavigationMenuLink
-                  href={navItem.to}
-                  className={` ${isActive ? "text-blue-400 " : "text-white"}`}
+          <NavigationMenu className="hidden md:block">
+            <NavigationMenuList className="flex items-center space-x-8">
+              {navigationItems.map((navItem, index: number) => {
+                const isActive = location.pathname === navItem.to;
+
+                return (
+                  <NavigationMenuItem key={index}>
+                    <NavigationMenuLink
+                      href={navItem.to}
+                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-gray-700 ${
+                        isActive
+                          ? "text-blue-400 bg-gray-700/50"
+                          : "text-gray-800"
+                      }`}
+                    >
+                      {navItem.label}
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                );
+              })}
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          <div className="flex items-center">
+            {user ? (
+              <Button
+                className="bg-blue-500 hover:bg-blue-600 text-white border-none rounded-md px-4 py-2 transition-all duration-200"
+                onClick={() => dispatch(logout())}
+              >
+                Logout
+              </Button>
+            ) : (
+              <LoginModal />
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-800 shadow-lg">
+            {navigationItems.map((navItem, index) => {
+              const isActive = location.pathname === navItem.to;
+
+              return (
+                <Link
+                  key={index}
+                  to={navItem.to}
+                  className={`block px-3 py-2 rounded-md text-base font-medium ${
+                    isActive
+                      ? "bg-gray-700 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   {navItem.label}
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            );
-          })}
-        </NavigationMenuList>
-      </NavigationMenu>
-      {isMenuOpen && (
-        <div
-          className={`absolute top-16 left-0 w-full bg-gray-800/95 md:hidden z-50 transform transition-all duration-300 ease-in-out ${
-            isMenuOpen
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-5 pointer-events-none"
-          }`}
-        >
-          {navigationItems.map((navItem, index) => {
-            const isActive = location.pathname === navItem.to;
-
-            return (
-              <Link
-                key={index}
-                to={navItem.to}
-                className={`block px-4 py-2 ${
-                  isActive ? "bg-blue-600" : "hover:bg-gray-700"
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {navItem.label}
-              </Link>
-            );
-          })}
+                </Link>
+              );
+            })}
+          </div>
         </div>
-      )}
-      {user ? (
-        <Button
-          className="bg-blue-400 border-none cursor-pointer hover:bg-blue-500"
-          onClick={() => dispatch(logout())}
-        >
-          Logout
-        </Button>
-      ) : (
-        <LoginModal />
       )}
     </nav>
   );
