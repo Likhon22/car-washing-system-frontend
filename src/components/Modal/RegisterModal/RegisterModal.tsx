@@ -69,7 +69,6 @@ const RegisterModal = ({
       password: data.password,
       appUser: appUserInfo,
     };
-    console.log(user);
 
     try {
       const formData = new FormData();
@@ -78,8 +77,7 @@ const RegisterModal = ({
       console.log(res);
 
       await dispatch(logout());
-      // Handle success
-      console.log("Registration successful");
+
       setShowRegister(false);
     } catch (err) {
       // Handle errors
